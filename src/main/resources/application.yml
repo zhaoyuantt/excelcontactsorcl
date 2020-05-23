@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:oracle:thin:@127.0.0.1:1521:ORCL
+    username: suofeiya
+    password: suofeiya@520
+    driver-class-name: oracle.jdbc.driver.OracleDriver
