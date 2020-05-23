@@ -15,3 +15,8 @@ spring:
     username: suofeiya
     password: suofeiya@520
     driver-class-name: oracle.jdbc.driver.OracleDriver
+
+logging:
+  level:
+    root: debug
+  file: G:\\file\\log\\excelcontactsoracle.log
