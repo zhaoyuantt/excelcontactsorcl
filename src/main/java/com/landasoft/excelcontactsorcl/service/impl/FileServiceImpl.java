@@ -9,11 +9,14 @@ import com.landasoft.excelcontactsorcl.util.IDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 文件Service接口实现
@@ -30,6 +33,7 @@ public class FileServiceImpl implements FileService {
     private String FILE_STORAGE_DIR;
 
     @Override
+    @Transactional
     public LayuiUploadResult saveFile(MultipartFile multipartFile) {
         LayuiUploadResult layuiUploadResult = new LayuiUploadResult();
 
@@ -53,9 +57,10 @@ public class FileServiceImpl implements FileService {
         }
 
         String filename = multipartFile.getOriginalFilename();
+        String id = IDUtils.getGeneId();
 
         TFileInfo fileInfo = new TFileInfo();
-        fileInfo.setId(IDUtils.getGeneId());
+        fileInfo.setId(id);
         fileInfo.setFileName(filename);
         fileInfo.setFileType(filename.substring(filename.lastIndexOf(".")).replace(".",""));
         fileInfo.setFileAlias(newFilename);
@@ -74,6 +79,9 @@ public class FileServiceImpl implements FileService {
         }
 
         layuiUploadResult.setCode(0);
+        Map<Object,Object> map = new HashMap<Object, Object>();
+        map.put("id",id);
+        layuiUploadResult.setData(map);
 
         return layuiUploadResult;
     }

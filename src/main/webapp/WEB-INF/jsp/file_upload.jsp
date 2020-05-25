@@ -99,10 +99,15 @@
 			}
 			,done: function(res, index, upload){
 				if(0 == res.code){ //上传成功
+					//存入数据库的文件唯一标识
+					var id = res.data.id;
+
 					var tr = demoListView.find('tr#upload-'+ index)
 							,tds = tr.children();
 					tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
-					tds.eq(3).html('<button type="button" class="layui-btn layui-btn-xs layui-btn-normal">提交</button>'); //清空操作
+
+					//绑定提交事件
+					tds.eq(3).html("<button type=\"button\" class=\"layui-btn layui-btn-xs layui-btn-normal\" onclick=\"goSubmit('"+id+"')\">提交</button>"); //清空操作
 					return delete this.files[index]; //删除文件队列已经上传成功的文件
 				}
 				this.error(index, upload);
@@ -121,6 +126,21 @@
 		});
 
 	});
+
+	/**
+	 * 跳转到提交页面
+	 * @param id
+	 */
+	function goSubmit(id){
+		//iframe层-父子操作
+		layer.open({
+			type: 2,
+			area: ['80vw', '90vh'],
+			fixed: false, //不固定
+			maxmin: true,
+			content: '/filesubmit/page/'+id
+		});
+	}
 
 </script>
 </body>

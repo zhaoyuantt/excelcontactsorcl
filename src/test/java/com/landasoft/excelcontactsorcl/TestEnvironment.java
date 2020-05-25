@@ -22,10 +22,13 @@ public class TestEnvironment {
     @Autowired
     private TjService tjService;
 
+
     @Test
     public void testGetItemInfo(){
         List<TItemInfo> itemInfoList = tjService.getItemInfo();
         if(null != itemInfoList)
             System.out.println(itemInfoList.size());
     }
+
+
 }
