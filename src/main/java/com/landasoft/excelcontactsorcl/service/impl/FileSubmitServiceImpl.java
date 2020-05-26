@@ -1,9 +1,13 @@
 package com.landasoft.excelcontactsorcl.service.impl;
 
 import com.landasoft.excelcontactsorcl.mapper.TFileInfoMapper;
+import com.landasoft.excelcontactsorcl.mapper.TFileSheetMapper;
+import com.landasoft.excelcontactsorcl.mypojo.LayuiTransferAllResult;
 import com.landasoft.excelcontactsorcl.mypojo.LayuiTransferResult;
 import com.landasoft.excelcontactsorcl.pojo.TFileInfo;
 import com.landasoft.excelcontactsorcl.pojo.TFileInfoExample;
+import com.landasoft.excelcontactsorcl.pojo.TFileSheet;
+import com.landasoft.excelcontactsorcl.pojo.TFileSheetExample;
 import com.landasoft.excelcontactsorcl.service.FileSubmitService;
 import com.landasoft.excelcontactsorcl.util.MyResult;
 import org.apache.commons.lang3.StringUtils;
@@ -14,14 +18,16 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 文件提交Service接口实现
@@ -35,6 +41,8 @@ public class FileSubmitServiceImpl implements FileSubmitService {
 
     @Autowired
     private TFileInfoMapper fileInfoMapper;
+    @Autowired
+    private TFileSheetMapper fileSheetMapper;
 
     @Override
     public MyResult getFileSheetListByFileId(String fileId) {
@@ -42,10 +50,23 @@ public class FileSubmitServiceImpl implements FileSubmitService {
             throw new RuntimeException("文件Id为blank");
         }
 
+        LayuiTransferAllResult layuiTransferAllResult = new LayuiTransferAllResult();
+
+        //首先判断有没有进行过选择sheet操作
+        List<TFileSheet> tFileSheetList = getFileSheet(fileId);
+        if(null != tFileSheetList){
+            String values[] = new String[tFileSheetList.size()];
+            for (int i = 0; i < tFileSheetList.size(); i++) {
+                TFileSheet fileSheet =  tFileSheetList.get(i);
+                String value = fileSheet.getValue();
+                values[i] = value;
+            }
+            layuiTransferAllResult.setValue(values);
+        }
+
+
         //结果容器
-        Map<Object,String> map = new HashMap<Object, String>();
-        LayuiTransferResult layuiTransferResult = new LayuiTransferResult();
-        List<Map<Object,String>> list = new ArrayList<Map<Object, String>>();
+        List<LayuiTransferResult> list = new ArrayList<LayuiTransferResult>();
 
         TFileInfoExample example = new TFileInfoExample();
         TFileInfoExample.Criteria criteria = example.createCriteria();
@@ -72,19 +93,47 @@ public class FileSubmitServiceImpl implements FileSubmitService {
             for(int i = 0 ;i < sheetNumbers;i++){
                 XSSFSheet sheet = workbook.getSheetAt(i);
                 String sheetName = sheet.getSheetName();
-                map.put(i,sheetName);
+
+                LayuiTransferResult layuiTransferResult = new LayuiTransferResult();
+                String value = DigestUtils.md5DigestAsHex(sheetName.getBytes(Charset.forName("UTF-8")));
+                layuiTransferResult.setValue(value);
+                layuiTransferResult.setTitle(sheetName);
+                list.add(layuiTransferResult);
             }
-
-            list.add(map);
-
-            layuiTransferResult.setData(list);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        layuiTransferAllResult.setData(list);
 
-        return MyResult.ok(layuiTransferResult);
+        return MyResult.ok(layuiTransferAllResult);
+    }
+
+    @Override
+    public List<TFileSheet> getFileSheet(String fileId) {
+        TFileSheetExample fileSheetExample = new TFileSheetExample();
+        TFileSheetExample.Criteria criteria = fileSheetExample.createCriteria();
+        criteria.andFileIdEqualTo(fileId);
+        List<TFileSheet> fileSheetList = fileSheetMapper.selectByExample(fileSheetExample);
+
+        if(null == fileSheetList || 0 == fileSheetList.size()){
+            return null;
+        }
+
+        return fileSheetList;
+    }
+
+    @Override
+    @Transactional
+    public int saveFileSheet(TFileSheet fileSheet) {
+        return 0;
+    }
+
+    @Override
+    @Transactional
+    public int saveFileSheet(List<TFileSheet> fileSheetList) {
+        return 0;
     }
 }

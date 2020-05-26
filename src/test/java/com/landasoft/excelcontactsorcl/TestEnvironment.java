@@ -7,7 +7,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.DigestUtils;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -28,6 +30,12 @@ public class TestEnvironment {
         List<TItemInfo> itemInfoList = tjService.getItemInfo();
         if(null != itemInfoList)
             System.out.println(itemInfoList.size());
+    }
+
+    @Test
+    public void testMd5DigestAsHex(){
+        String hex = DigestUtils.md5DigestAsHex("索菲亚".getBytes(Charset.forName("UTF-8")));
+        System.out.println(hex);
     }
 
 
