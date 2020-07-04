@@ -1,6 +1,7 @@
 package com.landasoft.excelcontactsorcl.service;
 
-import com.landasoft.excelcontactsorcl.mypojo.LayuiUploadResult;
+import com.landasoft.excelcontactsorcl.common.pojo.LayuiUploadResult;
+import com.landasoft.excelcontactsorcl.util.MyResult;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -16,4 +17,11 @@ public interface FileService {
      * @return
      */
     LayuiUploadResult saveFile(MultipartFile multipartFile);
+
+    /**
+     * 编辑文档对象
+     * @param fileId
+     * @return
+     */
+    MyResult updateFileById(String fileId);
 }

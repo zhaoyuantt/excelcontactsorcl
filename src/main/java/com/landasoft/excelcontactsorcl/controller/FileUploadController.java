@@ -1,6 +1,6 @@
 package com.landasoft.excelcontactsorcl.controller;
 
-import com.landasoft.excelcontactsorcl.mypojo.LayuiUploadResult;
+import com.landasoft.excelcontactsorcl.common.pojo.LayuiUploadResult;
 import com.landasoft.excelcontactsorcl.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

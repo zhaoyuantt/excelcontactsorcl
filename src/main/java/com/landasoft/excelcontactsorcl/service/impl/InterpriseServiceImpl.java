@@ -2,9 +2,9 @@ package com.landasoft.excelcontactsorcl.service.impl;
 
 import com.landasoft.excelcontactsorcl.mapper.TInterpriseCtrlMapper;
 import com.landasoft.excelcontactsorcl.mapper.TInterpriseMapper;
-import com.landasoft.excelcontactsorcl.mypojo.InterpriseRelation;
-import com.landasoft.excelcontactsorcl.mypojo.InterpriseResult;
-import com.landasoft.excelcontactsorcl.mypojo.InterpriseResultPojo;
+import com.landasoft.excelcontactsorcl.common.pojo.InterpriseRelation;
+import com.landasoft.excelcontactsorcl.common.pojo.InterpriseResult;
+import com.landasoft.excelcontactsorcl.common.pojo.InterpriseResultPojo;
 import com.landasoft.excelcontactsorcl.pojo.TInterprise;
 import com.landasoft.excelcontactsorcl.pojo.TInterpriseCtrl;
 import com.landasoft.excelcontactsorcl.pojo.TInterpriseExample;

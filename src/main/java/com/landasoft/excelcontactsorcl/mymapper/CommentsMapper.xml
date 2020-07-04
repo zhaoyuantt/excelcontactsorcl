@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.landasoft.excelcontactsorcl.mymapper.CommentsMapper" >
+
+  <resultMap id="tj0ResultMap" type="com.landasoft.excelcontactsorcl.common.pojo.Comments" >
+    <result column="COLUMN_NAME" property="columnName" jdbcType="VARCHAR" />
+    <result column="COMMENTS" property="comments" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <!--public List<Comments> getTableColumnList(String tableName);-->
+  <select id="getTableColumnList" parameterType="java.lang.String" resultMap="tj0ResultMap">
+        select COLUMN_NAME,COMMENTS from user_col_comments where Table_Name=#{val}
+  </select>
+
+</mapper>

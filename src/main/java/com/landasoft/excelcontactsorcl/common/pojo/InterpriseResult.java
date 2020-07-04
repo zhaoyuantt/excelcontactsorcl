@@ -1,4 +1,4 @@
-package com.landasoft.excelcontactsorcl.mypojo;
+package com.landasoft.excelcontactsorcl.common.pojo;
 
 import java.io.Serializable;
 import java.util.List;

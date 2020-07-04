@@ -1,11 +1,13 @@
 package com.landasoft.excelcontactsorcl.service.impl;
 
 import com.landasoft.excelcontactsorcl.mapper.TFileInfoMapper;
-import com.landasoft.excelcontactsorcl.mypojo.LayuiUploadResult;
+import com.landasoft.excelcontactsorcl.common.pojo.LayuiUploadResult;
 import com.landasoft.excelcontactsorcl.pojo.TFileInfo;
 import com.landasoft.excelcontactsorcl.service.FileService;
 import com.landasoft.excelcontactsorcl.util.FileUtils;
 import com.landasoft.excelcontactsorcl.util.IDUtils;
+import com.landasoft.excelcontactsorcl.util.MyResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -84,5 +86,24 @@ public class FileServiceImpl implements FileService {
         layuiUploadResult.setData(map);
 
         return layuiUploadResult;
+    }
+
+    @Override
+    @Transactional
+    public MyResult updateFileById(String fileId) {
+        if(StringUtils.isBlank(fileId)){
+            throw new RuntimeException("Required parameter is blank");
+        }
+
+        TFileInfo fileInfo = fileInfoMapper.selectByPrimaryKey(fileId);
+        if(null == fileInfo){
+            return null;
+        }
+
+        fileInfo.setRemark("aaabbbccc");
+
+        int uResult = fileInfoMapper.updateByPrimaryKey(fileInfo);
+
+        return MyResult.ok();
     }
 }

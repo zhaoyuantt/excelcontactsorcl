@@ -66,7 +66,7 @@
 						</dd>
 						<dd>
 							<a href="javascript:;" rel="external nofollow" class="site-demo-active" data-id="5"
-							   data-title="上传记录" data-url="/admin/visitnum/listpage">上传记录</a>
+							   data-title="上传记录" data-url="/file/history/page">上传记录</a>
 						</dd>
 					</dl>
 				</li>

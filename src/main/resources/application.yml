@@ -15,8 +15,13 @@ spring:
     username: suofeiya
     password: suofeiya@520
     driver-class-name: oracle.jdbc.driver.OracleDriver
+  banner:
+    charset: UTF-8
 
 logging:
   level:
     root: info
   file: G:\\file\\log\\excelcontactsoracle.log
+
+pagehelper:
+  helperDialect: oracle
