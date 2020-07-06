@@ -3,6 +3,7 @@ package com.landasoft.excelcontactsorcl.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.landasoft.excelcontactsorcl.common.pojo.LayuiTableResult;
 import com.landasoft.excelcontactsorcl.config.SpringContextUtils;
+import com.landasoft.excelcontactsorcl.constant.CategoryConstant;
 import com.landasoft.excelcontactsorcl.mapper.TFileImportHistoryMapper;
 import com.landasoft.excelcontactsorcl.mapper.TItemInfoMapper;
 import com.landasoft.excelcontactsorcl.pojo.TFileImportHistory;
@@ -81,7 +82,7 @@ public class FileImportHistoryServiceImpl implements FileImportHistoryService {
         String fileId = fileImportHistory.getFileId();
 
         int diResult = 0;
-        if("商品基本信息".equals(category)){
+        if(CategoryConstant.getName("item_info").equals(category)){
             TItemInfoMapper itemInfoMapper = SpringContextUtils.getBean(TItemInfoMapper.class);
 
             TItemInfoExample exampleItem = new TItemInfoExample();

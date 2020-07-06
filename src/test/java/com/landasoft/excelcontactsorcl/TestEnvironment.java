@@ -1,6 +1,7 @@
 package com.landasoft.excelcontactsorcl;
 
 import com.landasoft.excelcontactsorcl.config.SpringContextUtils;
+import com.landasoft.excelcontactsorcl.constant.CategoryConstant;
 import com.landasoft.excelcontactsorcl.pojo.TItemInfo;
 import com.landasoft.excelcontactsorcl.service.FileImportHistoryService;
 import com.landasoft.excelcontactsorcl.service.FileSubmitService;
@@ -52,6 +53,12 @@ public class TestEnvironment {
     @Test
     public void testGetFileImportHistory(){
         fileImportHistoryService.getFileImportHistory(null,1,10);
+    }
+
+    @Test
+    public void getConstantGetName(){
+        String name = CategoryConstant.getName("item_info");
+        System.out.println(name);
     }
 
 

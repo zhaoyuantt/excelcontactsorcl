@@ -5,6 +5,7 @@ import com.landasoft.excelcontactsorcl.common.pojo.Comments;
 import com.landasoft.excelcontactsorcl.common.pojo.SDMapping;
 import com.landasoft.excelcontactsorcl.common.storage.TableComments;
 import com.landasoft.excelcontactsorcl.config.SpringContextUtils;
+import com.landasoft.excelcontactsorcl.constant.CategoryConstant;
 import com.landasoft.excelcontactsorcl.mapper.TFileImportHistoryMapper;
 import com.landasoft.excelcontactsorcl.mapper.TFileInfoMapper;
 import com.landasoft.excelcontactsorcl.mapper.TFileSheetMapper;
@@ -58,8 +59,6 @@ public class FileSubmitServiceImpl implements FileSubmitService {
 
     @Value("${IMPORT_THREAD_EXEC_NUM}")
     private String IMPORT_THREAD_EXEC_NUM;
-    @Value("${IMPORT_ITEM_INFO}")
-    private String IMPORT_ITEM_INFO;
 
     //导入成功的记录数
     public static AtomicInteger IMPORT_SUCCESS_NUM = new AtomicInteger(0);
@@ -485,7 +484,7 @@ public class FileSubmitServiceImpl implements FileSubmitService {
             fileImportHistory.setFileRowNum(String.valueOf(total));
             fileImportHistory.setFileImportNum(Short.valueOf(drpc));
             fileImportHistory.setFileId(fileId);
-            fileImportHistory.setCatagory("商品基本信息");
+            fileImportHistory.setCatagory(CategoryConstant.getName("item_info"));
             fileImportHistory.setCreated(new Date());
             fileImportHistory.setUpdated(new Date());
 
